@@ -46,6 +46,15 @@ class App extends Component {
       this.setState({ hasStream: false });
     }
   };
+  addWatermark = (canvas) => {
+    const canvasContext = canvas.getContext("2d");
+    canvasContext.font = "oblique 72px cursive";
+    canvasContext.lineWidth = 3;
+    canvasContext.fillStyle = "Gray";
+    canvasContext.strokeStyle = "White";
+    canvasContext.strokeText("Watermark", canvas.width / 4, canvas.height / 2);
+    canvasContext.fillText("Watermark", canvas.width / 4, canvas.height / 2);
+  };
   render() {
     return (
       <div
@@ -95,7 +104,7 @@ class App extends Component {
                 <button
                   style={buttonStyle}
                   onClick={() => {
-                    this.setState({ scale: this.state.scale * 1.1 });
+                    this.setState({ scale: this.state.scale + 0.1 });
                   }}
                 >
                   zoom in
@@ -103,37 +112,40 @@ class App extends Component {
                 <button
                   style={buttonStyle}
                   onClick={() => {
-                    this.setState({ scale: this.state.scale * 0.9 });
+                    this.setState({ scale: this.state.scale - 0.1 });
                   }}
                 >
                   zoom out
                 </button>
               </div>
               <div>
-                <button
-                  style={buttonStyle}
-                  onClick={() => {
-                    this.setState({ filter: "" });
+                <div
+                  style={{ display: "flex", alignItems: "center" }}
+                  onChange={() => {
+                    const gray = document.getElementById("gray");
+                    const blur = document.getElementById("blur");
+                    let filterString = "";
+                    if (gray.checked) filterString += "grayscale(80%)";
+                    if (blur.checked) filterString += "blur(4px)";
+                    this.setState({ filter: filterString });
                   }}
                 >
-                  original
-                </button>
-                <button
-                  style={buttonStyle}
-                  onClick={() => {
-                    this.setState({ filter: "grayscale(80%)" });
-                  }}
-                >
-                  grayscale
-                </button>
-                <button
-                  style={buttonStyle}
-                  onClick={() => {
-                    this.setState({ filter: "blur(4px)" });
-                  }}
-                >
-                  blur
-                </button>
+                  <button
+                    style={buttonStyle}
+                    onClick={() => {
+                      this.setState({ filter: "" });
+                      const gray = document.getElementById("gray");
+                      const blur = document.getElementById("blur");
+                      gray.checked = blur.checked = false;
+                    }}
+                  >
+                    original
+                  </button>
+                  <input type="checkbox" id={"gray"} />
+                  <label>grayscale</label>
+                  <input type="checkbox" id={"blur"} />
+                  <label>blur</label>
+                </div>
               </div>
               <button
                 style={buttonStyle}
@@ -141,6 +153,7 @@ class App extends Component {
                   const canvas = document.getElementById("canvas");
                   const link = document.createElement("a");
                   link.download = "download.png";
+                  this.addWatermark(canvas);
                   link.href = canvas.toDataURL();
                   link.click();
                 }}
