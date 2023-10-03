@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/webcam/static/js/main.86da2cee.js",
+    "main.js": "/webcam/static/js/main.9fa13f6d.js",
     "index.html": "/webcam/index.html",
-    "main.86da2cee.js.map": "/webcam/static/js/main.86da2cee.js.map"
+    "main.9fa13f6d.js.map": "/webcam/static/js/main.9fa13f6d.js.map"
   },
   "entrypoints": [
-    "static/js/main.86da2cee.js"
+    "static/js/main.9fa13f6d.js"
   ]
 }
