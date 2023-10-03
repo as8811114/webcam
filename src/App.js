@@ -2,7 +2,7 @@ import { Component } from "react";
 const buttonStyle = { width: "100px" };
 
 const constraints = {
-  video: { facingMode: { ideal: "environment" } },
+  video: true,
 };
 
 class App extends Component {
